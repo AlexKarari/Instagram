@@ -10,7 +10,8 @@ class Profile(models.Model):
 
 class Comments(models.Model):
     comment = models.CharField(max_length=1000)
-    
+    comment_time = models.DateTimeField(auto_now_add=True)
+        
 
 class Image(models.Model):
     image = models.ImageField(upload_to='picfolder/')
