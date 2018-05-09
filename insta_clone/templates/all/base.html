@@ -1,3 +1,5 @@
+{% load bootstrap3 %} 
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -7,12 +9,15 @@
     {% else %}
     <title> IG CLONE </title>
     {% endif %}
+    {% block styles %} 
+    {% bootstrap_css %}
+    {% endblock %}
 
 </head>
 
 <body>
     {% include "navbar.html" %}
-    
+
     {% block content %}
     <h2>IG CLONE</h2>
     {%endblock%}
