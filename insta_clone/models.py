@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     avatar = models.ImageField(upload_to='profilepicture/', blank=True)
-    bio = models.CharField(max_length=1000)
+    bio = models.TextField()
     user = models.ForeignKey(User)
 
 class Comments(models.Model):
