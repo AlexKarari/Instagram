@@ -11,6 +11,8 @@ class Profile(models.Model):
 class Comments(models.Model):
     comment = models.CharField(max_length=1000)
     comment_time = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering = ['comment_time']
         
 
 class Image(models.Model):
@@ -21,5 +23,10 @@ class Image(models.Model):
     likes = models.IntegerField(default=0)
     comments = models.ForeignKey(Comments)
     date_uploaded = models.DateTimeField(auto_now_add=True, blank=True)
-
+    
+    class Meta:
+        ordering = ['-date_uploaded']
+    
+    def save_image(self):
+        self.save()
 
