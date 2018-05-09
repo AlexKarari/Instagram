@@ -1,0 +1,25 @@
+{%extends 'all/base.html'%} 
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        {% if profile %}
+        <h2>Found {{ profile|length }} of searched term {{message}}</h2>
+        {% else %}
+        <h2> No such user profile exists for the search term {{message}}</h2>
+        {% endif %}
+
+    </div>
+
+    <div class="row">
+
+        {% if profile %} 
+        {% for prof in profile %}
+        <div class="col-sm-6 col-md-3">
+            <h1>{{prof.user}}</h1>
+        </div>
+        {% endfor %} 
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
