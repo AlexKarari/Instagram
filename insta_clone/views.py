@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import Profile, Comments, Image
+from django.contrib.auth.decorators import login_required
 
 # View Function to display a user's profile
+@login_required(login_url='/accounts/login/')
 def profile(request):
     prof_pic = Profile.objects.all()
     return render(request, 'all/profile.html', {'avatar': prof_pic})
