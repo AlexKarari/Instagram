@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Profile, Comments, Image
 from django.contrib.auth.decorators import login_required
-
+from .forms import NewCommentForm
 # View Function to display the timeline
 @login_required(login_url='/accounts/login/')
 def timeline(request):
@@ -33,3 +33,17 @@ def search_results(request):
     else:
         message = "You haven't searched for any user"
         return render(request, 'all/search.html', {"message": message})
+
+#View function to comment on any image
+@login_required(login_url='/accounts/login/')
+def new_comment(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewCommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.poster = current_user
+            comment.save()
+    else:
+        form = NewCommentForm()
+    return render(request, 'new_comment.html', {"form": form})
