@@ -23,18 +23,12 @@ class Profile(models.Model):
     def get_profile(cls):
         profile = cls.objects.all()
         return profile
+        
     @classmethod
     def search_profile(cls, search_term):
         profile = cls.objects.filter(user_icontains=search_term)
         return profile
-    
-
-class Comments(models.Model):
-    comment = models.CharField(max_length=1000)
-    comment_time = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        ordering = ['comment_time']
-        
+          
 
 class Image(models.Model):
     image = models.ImageField(upload_to='picfolder/')
@@ -42,7 +36,6 @@ class Image(models.Model):
     image_caption = models.CharField(max_length=100)
     profile = models.ForeignKey(Profile)
     likes = models.IntegerField(default=0)
-    comments = models.ForeignKey(Comments)
     date_uploaded = models.DateTimeField(auto_now_add=True, blank=True)
     
     class Meta:
@@ -51,3 +44,18 @@ class Image(models.Model):
     def save_image(self):
         self.save()
 
+
+class Comments(models.Model):
+    poster = models.ForeignKey(User, blank=True)
+    user_pic = models.ForeignKey(Image, blank=True)
+    comment = models.CharField(max_length=1000)
+    comment_time = models.DateTimeField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ['-comment_time']
+
+    def save_comment(self):
+        self.save()
+
+    def __str__(self):
+        return self.comment
