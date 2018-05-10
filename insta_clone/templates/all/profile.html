@@ -1,13 +1,29 @@
 {%extends 'all/base.html'%} 
+{% load static %}
 {% block content %} 
-<div class="container-fluid">
+{{block.super}}
+<div class="container">
     <div class="row">
-        <div col-md-8 col-md-offset-4>
-            <h3>IG CLONE APP</h3>
+        <div col-md-5 col-md-offset-4>
+            <h3>Image section</h3>
         </div>
+        <div col-md-3 col-md-offset-4>
+            <h3>Edit section</h3>
+        </div>
+        <hr>
+        {% for images in image%}
+        <!--Looping through pics-->
+        <div class="box" col-md-8 col-md-offset-4>
+            <!-- Displaying images in profile-->
+            <div class="boxInner">
+                <img src="{{images.image.url}}" class="img-responsive" alt="Image">
+                <div class="titleBox" style="font-family: 'Cabin Sketch', cursive">{{images.image_name|upper}}</div>
+            </div>
+            
+        </div>
+        {% endfor %}
 
     </div>
 
 </div>
-{{bock.super}} 
 {% endblock %}

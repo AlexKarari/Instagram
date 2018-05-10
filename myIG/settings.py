@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'insta_clone',
     'bootstrap3',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
