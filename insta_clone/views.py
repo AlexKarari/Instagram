@@ -1,23 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Profile, Comments, Image
 from django.contrib.auth.decorators import login_required
-from .forms import NewCommentForm
+from .forms import NewCommentForm, NewStatusForm
+
 # View Function to display the timeline
-@login_required(login_url='/accounts/login/')
 def timeline(request):
     current_user = request.user
-    images = Image.objects.order_by('-date_uploaded')
-    profile = Profile.objects.order_by('-date_created')
-    comment = Comments.objects.order_by('-comment_time')
-    return render(request, 'all/timeline.html', {'image':images, 'name':profile, 'comment':comment})
+    images = Image.objects.all()
+    profile = Profile.objects.all()
+    comment = Comments.objects.all()
+    return render(request, 'all/timeline.html', {"images": images, "name": profile, "comment": comment})
 
 
 # View Function to display a user's profile
-@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
 def profile(request):
     current_user = request.user
-    prof_pic = Image.objects.get(user_id=current_user.id)
+    # print(current_user.id)
     profile = Profile.objects.get(user_id=current_user.id)
+    print(profile)
+    prof_pic = Image.objects.all().filter(user_id=current_user.id)
     prof_images = Image.objects.all().filter(profile_id=current_user.id)
     return render(request, 'all/profile.html', {'avatar': prof_pic, 'name':profile, 'image':prof_images})
 
@@ -44,6 +46,36 @@ def new_comment(request):
             comment = form.save(commit=False)
             comment.poster = current_user
             comment.save()
+        return redirect('various')
     else:
         form = NewCommentForm()
     return render(request, 'new_comment.html', {"form": form})
+
+#View function to put up a new status
+# @login_required(login_url='/accounts/login/')
+def new_status(request):
+    current_user = request.user
+    username = current_user.username
+    if request.method == 'POST':
+        form = NewStatusForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save()
+            image.user = request.user
+            image.save()
+        return redirect('various')
+    else:
+        form = NewStatusForm()
+    return render(request, 'timeline.html', {"form": form})
+
+#View function to view another user's profile
+@login_required(login_url='/ accounts/login/')
+def userProfile(request, user_id):
+    profile = Profile.objects.get(id=user_id)
+    prof_images = Image.objects.all().filter(user_id=user_id)
+    return render(request, 'profile.html', {"user": profile, "avatar":prof_images})
+
+#View function to view an individual image for any user
+# @login_required(login_url='/ accounts/login/')
+def soloImage(request, pic_id):
+    image = Image.objects.get(id=pic_id)
+    return render(request, 'individual.html', {"image": image})

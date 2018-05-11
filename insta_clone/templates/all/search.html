@@ -6,7 +6,8 @@
         {% if profile %}
         <h2>Found {{ profile|length }} of searched term {{message}}</h2>
         {% else %}
-        <h2> No such user profile exists for the search term {{message}}</h2>
+        <h2> No such user profile exists for the search term {{message}}.</h2>
+        <h2>A different name perhaps?</h2>
         {% endif %}
 
     </div>

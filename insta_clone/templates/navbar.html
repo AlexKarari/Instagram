@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'home' %}">IG CLONE</a>
+            <a class="navbar-brand" href="{% url 'various' %}">IG CLONE</a>
         </div>
         <!-- Adding a search form  -->
         <div class="col-sm-4 col-md-4 navbar-right">
@@ -32,6 +32,9 @@
                             <a href="#">Home</a>
                         </li>
                         <li>
+<a href="{%url 'newStatus' %}">Post New Status</a>
+                        </li>
+                        <li>
                             <a href="/accounts/password/change">Change Password</a>
                         </li>
                         <li>
@@ -41,9 +44,13 @@
                 </li>
             </ul>
             {% else %}
-            <li>
-                <a class='btn btn-default' href="/accounts/login">Login</a>
-            </li>
+            <ul>
+                <li>
+                    <a class='btn btn-default' href="/accounts/login">Login</a>
+                </li>
+
+            </ul>
+
         
             {% endif %}
         </div>

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
-    avatar = models.ImageField(upload_to='profilepicture/', blank=True)
+    avatar = models.ImageField(upload_to='profilepicture/', null=True)
     bio = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
 
@@ -26,17 +26,18 @@ class Profile(models.Model):
         
     @classmethod
     def search_profile(cls, search_term):
-        profile = cls.objects.filter(user_icontains=search_term)
+        profile = cls.objects.filter(name__icontains=search_term)
         return profile
           
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='picfolder/')
-    image_name = models.CharField(max_length=30)
-    image_caption = models.CharField(max_length=100)
-    profile = models.ForeignKey(Profile)
+    image = models.ImageField(upload_to='picfolder/', null=True)
+    image_name = models.CharField(max_length=30, null=True)
+    image_caption = models.CharField(max_length=100, null=True)
+    profile = models.ForeignKey(Profile, null=True)
+    user = models.ForeignKey(User, null=True)
     likes = models.IntegerField(default=0)
-    date_uploaded = models.DateTimeField(auto_now_add=True, blank=True)
+    date_uploaded = models.DateTimeField(auto_now_add=True, null=True)
     
     class Meta:
         ordering = ['-date_uploaded']

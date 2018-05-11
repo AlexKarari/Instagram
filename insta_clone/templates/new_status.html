@@ -1,5 +1,5 @@
-{% load bootstrap3 %} 
-{% load staticfiles %}
+{%extends 'all/base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
 <!DOCTYPE html>
 <html>
 
@@ -8,17 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Comment</title>
-    {{form.media}} 
-    {% block styles %} 
-    {% bootstrap_css %}
-    <link rel="stylesheet" href="{% %}"> 
-    {% endblock %}
+    {{form.media}} {% block styles %} {% bootstrap_css %}
+    <link rel="stylesheet" href="#"> {% endblock %}
 
 </head>
 
 <body>
 
-    <form action="{%url 'new_comment'%}" method="post" enctype="multipart/form-data">
+<form action="{%url 'newStatus' %}" method="post" enctype="multipart/form-data">
         {%csrf_token%} {% bootstrap_form form%}
         <input type="submit" class="btn btn-success btn-lg" value="Post">
     </form>
