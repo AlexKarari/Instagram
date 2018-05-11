@@ -17,8 +17,8 @@ def timeline(request):
 def profile(request):
     current_user = request.user
     # print(current_user.id)
-    profile = Profile.objects.get(user_id=current_user.id)
-    print(profile)
+    # profile = Profile.objects.get(user_id=current_user.id)
+    # print(profile)
     prof_pic = Image.objects.all().filter(user_id=current_user.id)
     prof_images = Image.objects.all().filter(profile_id=current_user.id)
     return render(request, 'all/profile.html', {'avatar': prof_pic, 'name':profile, 'image':prof_images})
@@ -65,8 +65,9 @@ def new_status(request):
         return redirect('various')
     else:
         form = NewStatusForm()
-    return render(request, 'timeline.html', {"form": form})
-
+    return render(request, 'new_status.html', {"form": form})
+    
+    
 #View function to view another user's profile
 @login_required(login_url='/ accounts/login/')
 def userProfile(request, user_id):
