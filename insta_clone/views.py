@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Profile, Comments
+from .models import Profile, Comments, Image
 from django.contrib.auth.decorators import login_required
 from .forms import NewCommentForm, NewStatusForm
 
 # View Function to display the timeline
+
+
 def timeline(request):
     current_user = request.user
     images = Image.objects.all()
@@ -21,9 +23,11 @@ def profile(request):
     # print(profile)
     prof_pic = Image.objects.all().filter(user_id=current_user.id)
     prof_images = Image.objects.all().filter(profile_id=current_user.id)
-    return render(request, 'all/profile.html', {'avatar': prof_pic, 'name':profile, 'image':prof_images})
+    return render(request, 'all/profile.html', {'avatar': prof_pic, 'name': profile, 'image': prof_images})
 
 #View function to search for users in the app
+
+
 def search_results(request):
     if 'user' in request.GET and request.GET["user"]:
         search_term = request.GET.get("user")
@@ -37,6 +41,8 @@ def search_results(request):
         return render(request, 'all/search.html', {"message": message})
 
 #View function to comment on any image
+
+
 @login_required(login_url='/accounts/login/')
 def new_comment(request):
     current_user = request.user
@@ -53,31 +59,34 @@ def new_comment(request):
 
 #View function to put up a new status
 # @login_required(login_url='/accounts/login/')
+
+
 def new_status(request):
     current_user = request.user
     username = current_user.username
-    current_profile = current_user.profile
     if request.method == 'POST':
         form = NewStatusForm(request.POST, request.FILES)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            form.save()
-        return redirect('profile')
+            image = form.save()
+            image.user = request.user
+            image.save()
+        return redirect('various')
     else:
         form = NewStatusForm()
     return render(request, 'new_status.html', {"form": form})
-    
-    
+
+
 #View function to view another user's profile
 @login_required(login_url='/ accounts/login/')
 def userProfile(request, user_id):
     profile = Profile.objects.get(id=user_id)
     prof_images = Image.objects.all().filter(user_id=user_id)
-    return render(request, 'profile.html', {"user": profile, "avatar":prof_images})
+    return render(request, 'profile.html', {"user": profile, "avatar": prof_images})
 
 #View function to view an individual image for any user
 # @login_required(login_url='/ accounts/login/')
+
+
 def soloImage(request, pic_id):
     image = Image.objects.get(id=pic_id)
     return render(request, 'individual.html', {"image": image})

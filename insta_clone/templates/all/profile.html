@@ -3,40 +3,64 @@
 {% block content %} 
 {{block.super}}
 <div class="container">
+
     <div class="row profileHeaderRow">
+
         <!-- Empty Div -->
         <div class="col-md-1 col-lg-1">
 
         </div>
 
-    <!-- User Profile Pic  -->
-    <div class="col-md-3 col-lg-3">
-        <img src="{{current_user.profile.avatar.url}}" alt="{{current_user.username}}" class="img-responsive profilePicture">
-    </div>
-    <!-- Current user's name -->
-    <div class="col-md-7 col-lg-7">
-        <h1 class="username">
-            {{current_user.username}}
-        </h1>
-        <h1 class="createPost">
-            <a href="{% url 'newStatus' %}">Post Up<i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
-        </h1>
-    </div>
-    <!-- Empty Div -->
-    <div class="col-md-1 col-lg-1">
+        <!-- Profile Pic  -->
+
+        <div class="col-md-3 col-lg-3">
+
+            <img src="{{current_user.profile.avatar.url}}" alt="{{current_user.username}}" class="img-responsive profilePicture">
+
+        </div>
+
+        <!-- Current user's name -->
+
+        <div class="col-md-7 col-lg-7">
+
+            <h1 class="username">
+                {{current_user.username}}
+            </h1>
+
+            <h1 class="createPost">
+
+                <a href="{% url 'newStatus' %}">
+                    Create Post
+                    <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                </a>
+
+            </h1>
+
+        </div>
+
+        <!-- Empty Div -->
+        <div class="col-md-1 col-lg-1">
+
+        </div>
 
     </div>
-</div>
 
-<hr>
-<!-- Current User's Posts  -->
-{% for images in image%}
-<div class="col-md-4 col-lg-4">
-img.img-responsive.postImage {
-<img src="{{images.image.url}}" alt="{{images.image_caption}}" class="img-responsive postImage">
-<h5 class="text-center">{{image.image_caption}}</h5>
-</div>
-{% endfor %}
+    <hr>
+
+    <!-- Current User's Posts  -->
+    {% for image in image %}
+
+    <div class="col-md-4 col-lg-4">
+
+        <img src="{{image.image.url}}" alt="{{image.image_caption}}" class="img-responsive postImage">
+
+        <h5 class="text-center">
+            {{image.image_caption}}
+        </h5>
+
+    </div>
+
+    {% endfor %}
 
 </div>
 
