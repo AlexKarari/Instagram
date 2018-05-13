@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Profile, Comments, Image
+from .models import Profile, Comments
 from django.contrib.auth.decorators import login_required
 from .forms import NewCommentForm, NewStatusForm
 
@@ -56,13 +56,14 @@ def new_comment(request):
 def new_status(request):
     current_user = request.user
     username = current_user.username
+    current_profile = current_user.profile
     if request.method == 'POST':
         form = NewStatusForm(request.POST, request.FILES)
         if form.is_valid():
-            image = form.save()
-            image.user = request.user
-            image.save()
-        return redirect('various')
+            form = form.save(commit=False)
+            form.user = request.user
+            form.save()
+        return redirect('profile')
     else:
         form = NewStatusForm()
     return render(request, 'new_status.html', {"form": form})

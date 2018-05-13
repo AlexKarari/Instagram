@@ -1,14 +1,14 @@
 from django import forms
-from .models import Comments, Image
+from .models import Comments, Post
 
 class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comments
-        exclude = ['poster', 'comment_time']
+        exclude = ['user', 'post']
 
 
 class NewStatusForm(forms.ModelForm):
     class Meta:
-        model = Image
-        exclude = ['image_name', 'profile', 'likes']
+        model = Post
+        exclude = ['user', 'profile', 'date_posted', 'tags']
         
