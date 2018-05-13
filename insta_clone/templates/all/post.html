@@ -14,14 +14,14 @@
 
                 <div class="panel-heading">
 
-                    <img src="{{post.profile.profile_pic.url}}" alt="{{post.profile.user.username}}" class="img-responsive profilePicture">
+                    <img src="{{post.profile.avatar.url}}" alt="{{post.profile.user.username}}" class="img-responsive profilePicture">
 
                     <h6 class="username">
                         {{post.profile.user.username}}
                     </h6>
 
                     <h6 class="timeSince">
-                        {{post.post_date | timesince}} ago
+                        {{post.post_date | timesince}} AGO
                     </h6>
 
                 </div>
@@ -50,7 +50,7 @@
 
                     <h5>
 
-                        <img src="{{comment.user.profile.profile_pic.url}}" alt="{{comment.user.username}}" class="img-responsive commentProfilePicture">
+                        <img src="{{comment.user.profile.avatar.url}}" alt="{{comment.user.username}}" class="img-responsive commentProfilePicture">
 
                         <span class="commenterName">
 
@@ -91,19 +91,6 @@
 
                         <!-- Empty div -->
                         <div class="col-sm-4 col-md-4 col-lg-4">
-
-                        </div>
-
-                        <!-- Download Div -->
-                        <div class="col-sm-4 col-md-4 col-lg-4">
-
-                            <h3 class="commentLink">
-
-                                <a href="{%url 'download' post.id%}">
-                                    Download
-                                </a>
-
-                            </h3>
 
                         </div>
 
