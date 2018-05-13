@@ -1,13 +1,14 @@
 {%extends 'all/base.html'%} 
-{% load static %} 
+{% load bootstrap4 %} 
 {% block content %} 
 {{block.super}}
 <div class="container mb-5 pb-5">
     {% for profile in profile %}
     <div class="row">
         <div class="col-md-4">
-            {% if profile.prof_pic %}
-            <img src="{{profile.avatar.url}}" class="img-circle" alt="{{profile.user.username}} profile pic"> {% endif %}
+            {% if profile.avatar %}
+            <img src="{{profile.avatar.url}}" class="img-circle" alt="{{profile.user.username}} profile pic"> 
+            {% endif %}
         </div>
         <div class="col-md-8">
             <p>
@@ -16,11 +17,7 @@
                 <b>e-mail: </b> {{profile.user.email}}</p>
             <p>
                 <b>Bio: </b>{{profile.bio}}</p>
-            {% if profile.user.id == user.id%} {#
-            <p>
-                <a href="#" title="under development ...">
-                    <i class="fa fa-cog fa-spin"></i> Edit profile</a>
-            </p> #}
+            {% if profile.user.id == user.id%}
             <p>
                 <a href="{% url 'editprofile'%}">
                     <i class="fa fa-cog fa-spin"></i> Edit profile</a>
@@ -36,13 +33,13 @@
     </div>
     {% endfor %}
     <div class="row">
-        {% for photo in photos %}
+        {% for image in images %}
         <div class="col-md-3 ml-5 mr-4">
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{photo.photo.url}}" alt="{{poto.photo_caption}} photo" style="height: 18rem;">
+                <img class="card-img-top" src="{{image.image.url}}" alt="{{image.image_caption}} photo" style="height: 18rem;">
                 <p style="font-size:12px;" class="ml-2 mt-2">
-                    <span class="textsize">{{photo.user.username}} </span>: {{photo.photo_caption}}</p>
-                <p class="text-muted ml-2" style="font-size:10px">{{photo.pub_date|timesince}}</p>
+                    <span class="textsize">{{image.user.username}} </span>: {{image.image_caption}}</p>
+                    <p class="text-muted ml-2" style="font-size:10px">{{image.date_uploaded|timesince}}AGO</p>
             </div>
         </div>
         {% endfor%}

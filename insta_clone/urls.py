@@ -5,15 +5,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url('^$', views.timeline, name='various'),
-    url(r'^profile/', views.profile, name='profile'),
     url(r'^search/', views.search_results, name='search_results'),
-    url(r'^user/(\d+)', views.userProfile, name='userProfiles'),
-    url(r'^image/(\d+)', views.soloImage, name='soloImage'),
-    url(r'^new/comment$', views.new_comment, name='new_comment'),
-    url(r'^new/status/$', views.new_status, name='newStatus'),
-
-
-
+    url(r'^userprofile/(\d+)', views.user_profile, name='user_profile'),
+    url(r'^newphoto/', views.new_photo, name='new_photo'),
+    url(r'^comment/(?P<id>\d+)', views.comment, name='comment'),
+    url(r'^editprofile/', views.editprofile, name='editprofile'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

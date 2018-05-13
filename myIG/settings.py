@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'insta_clone',
-    'bootstrap3',
+    'bootstrap4',
     'tinymce',
 ]
 

@@ -64,7 +64,6 @@ class Image(models.Model):
 class Comments(models.Model):
     comment = models.CharField(max_length=1000, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
-    user_pic = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comment', blank=True)
     comment_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -7,100 +7,57 @@
     <div class="col-sm-7">
         <div class="col-sm-2">
             <!--empty div-->
-
         </div>
         <div class="col-sm-10">
-            {% for image in images %}
-            <div class="well" style="background-color:white; margin-bottom:70px">
-                <header>
-                    <img src="{{image.image.url}}" alt="" style="height:50px;width:50px; border-radius:50%">
-                    <p style="display:inline; margin-left:10px; font-weight:bolder; font-size:16px">{{image.user}}</p>
-                </header>
-                <a href="{% url 'soloImage' image.id%}">
-                    <img src="{{image.image.url}}" class="img-responsive">
-                </a>
-                <div class="like" style="font-size:30px">
-                    <a href="#">
-                        <i class="material-icons">favorite_border</i>
-                    </a>
-                    <a href="#">
-                        <i class="material-icons" style="margin-left:10px">chat_bubble_outline</i>
-                    </a>
-                    <i class="material-icons" style="float:right; font-size:40px">bookmark_border</i>
-                </div>
-                <p style="margin-top:10px;font-weight:bolder; font-size:16px">{{image.likes}} Likes</p>
-                <br> 
-                {% for comment in comments %}
-                <p style="margin-bottom:-1px">
-                    <span style=" margin-right:10px; font-weight:bolder; font-size:16px">{{comment.poster}}</span>
-                    {{comment.comment}}
-                </p>
-                {% endfor %}
-                <p style="font-size:12px;color:grey; margin-top:10px">{{image.date_uploaded|timesince|upper}} AGO</p>
-                <hr>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="col-sm-5">
-        <div class="col-sm-8">
-            <div class="container-fluid" style="position:fixed; width:320px">
-                <header style="margin-bottom:30px">
-                    <img src="{{userprofile.avatar.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
-                    <p style="font-weight:bold;font-size:16px">{{userprofile.user}}</p>
-                </header>
-                <hr>
-                <p style="float:left; font-size:15px; font-weight:bolder; color:grey">Stories</p>
-                <p style="float:right; font-weight:bolder; font-size:15px">Watch All</p>
-                <div class="stories" style="overflow-y:auto; height:300px;margin-top:50px;padding:10px; border-bottom: 1px solid #ddd; width:100%">
-                    {% for profile in profiles %}
-                    <div class="user_stories" style="margin-bottom:20px">
-                        <img src="{{profile.avatar.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
-                        <a href="{% url 'userProfiles' profile.id %}">
-                            <p style="font-weight:bold;font-size:16px">{{profile.user}}
-                                <br>
-                        </a>
-                        <span style="font-size:12px;font-weight:normal; color:grey">{{profile.date_created|timesince|upper}} AGO</span>
-                        </p>
+            {% for post in posts %}
+            <div class="row">
+                <div class="col-xs-1 col-sm-1 col-md-1 mt-1"></div>
+                <div class="col-xs-5 col-sm-5 col-md-5 mt-5 mr-5">
+                    <div class="card mr-5 mb-3" style="width: 25rem;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item textsize">
+                                <a href="{% url 'user_profile' post.user.id %}" class="textsize">{{post.user.username}}</a>
+                            </li>
+                        </ul>
+                        {% if post.image%}
+                        <img class="card-img-top" src="{{post.image.url}}" class="img-responsive" alt=""> 
+                        {% endif%}
+                        <div class="mt-2 ml-2 mr-3 mb-3">
+                            <span>
+                                <i class="fa fa-heart-o fa-1x mr-2"></i>
+                            </span>
+                            <span>
+                                <a href="{% url 'comment'  id=post.pk %}">
+                                    <i class="fa fa-comment-o fa-1x"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <i class="fa fa-bookmark-o fa-1x float-right mt-1"></i>
+                            </span>
+                            <p class="mt-1" style="font-size:12px;">
+                                <a href="{% url 'user_profile' post.user.id%}" class="textsize">{{post.user.username}}</a> {{post.image_caption}}</p>
+                            <p class="text-muted" style="font-size:10px">{{post.pub_date|timesince}}</p>
+            
+                            <div class="mb-2">
+                                {% for comment in post.comment.all %}
+                                <p style="font-size:11px;">
+                                    <strong>
+                                        <a href="{% url 'user_profile' comment.user.id%}" class="textsize">{{comment.user}}</a>
+                                    </strong> {{comment.comment}}</p>
+                                {% endfor %}
+                                <hr>
+                                <a href="{% url 'comment'  id=post.pk %}">
+                                    <p class="text-muted ml-3" style="font-size:10px"> Add comment ...</p>
+                                </a>
+                            </div>
+            
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
+            {%endfor%}
         </div>
-
-        <div class="col-sm-4">
-
-        </div>
-        {% else %}
-        <div class="col-sm-3">
-        </div>
-        <div class="col-sm-6">
-            {% for image in images %}
-            <div class="well" style="background-color:white">
-                <header>
-                    <img src="https://static.pexels.com/photos/34950/pexels-photo.jpg" alt="" style="height:50px;width:50px; border-radius:50%">
-                    <p style="display:inline; margin-left:10px; font-weight:bolder; font-size:16px">{{image.user}}</p>
-                </header>
-                <img src="{{image.image.url}}" class="img-responsive">
-                <div class="like" style="font-size:30px; margin-top:10px">
-                    <i class="fa fa-heart-o" aria-hidden="true" style="margin-right:5px"></i>
-                    <i class="material-icons" style="float:right; font-size:40px">bookmark_border</i>
-                </div>
-                <p style="margin-top:10px;font-weight:bolder; font-size:16px">{{image.likes}} Likes</p>
-                <br>
-
-                <p style="margin-top:-20px">
-                    <span style=" margin-right:10px; font-weight:bolder; font-size:16px">Kepha Okari</span>Awesome Place</p>
-                <p style="font-size:14px;color:grey">{{image.date_uploaded|timesince}} ago</p>
-                <hr>
-                <form class="" action="" method="post">
-                    <input type="text" name="" value="" placeholder="Add a comment" style="border:none; padding:10px; width:100%">
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="col-sm-3">
-        </div>
-        {% endif %}
+        {% endif%}
+        {% endblock %}
     </div>
-    {% endblock %}
+</div>
