@@ -7,6 +7,7 @@
             {% if form.errors %}
             <p> Password or Username is incorrect </p>
             {% endif %}
+            
             <div class="panel panel-default">
 
                 <div class="panel-heading">
@@ -24,6 +25,8 @@
                         <input type="hidden" name="next" value="{{next}}">
 
                     </form>
+
+                    <h4>Don't have an account? <a href="/accounts/register/">Sign up</a></h4>
 
                 </div>
 

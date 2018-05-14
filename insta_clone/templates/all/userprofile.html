@@ -2,52 +2,53 @@
 {% load bootstrap4 %} 
 {% block content %} 
 {{block.super}}
-<div class="container mb-5 pb-5">
+<div class="container-fluid mt-4">
     {% for profile in profile %}
-    
     <div class="row">
+        <div class="col-md-2">
+            <!--Empty Div-->
+        </div>
         <div class="col-md-4">
             {% if profile.avatar %}
             <img src="{{profile.avatar.url}}" class="img-circle" alt="{{profile.user.username}} profile pic"> 
             {% endif %}
         </div>
-        <div class="col-md-8">
+        <div class="mt-6 col-md-4">
             <p>
-                <b>Username: </b> {{profile.user.username}}</p>
+                <b>Username: </b> {{profile.user.username}}
+            </p>
             <p>
-                <b>e-mail: </b> {{profile.user.email}}</p>
+                <b>e-mail: </b> {{profile.user.email}}
+            </p>
             <p>
-                <b>Bio: </b>{{profile.bio}}</p>
+                <b>Bio: </b>{{profile.bio}}
+            </p>
             {% if profile.user.id == user.id%}
             <p>
-                <a href="{% url 'editprofile'%}">
-                    <i class="fa fa-cog fa-spin"></i> Edit profile</a>
+                <a href="{% url 'editprofile'%}"><i class="fa fa-cog fa-spin"></i> Edit profile</a>
             </p>
             <p>
-                <a href="/logout" title="logout">Logout
-                    <i class="fa fa-sign-out mr-4 pr-3"></i>
-                </a>
+                <a href="/logout" title="logout">Logout<i class="fa fa-sign-out mr-4 pr-3"></i></a>
             </p>
             {% endif %}
-        </div>
 
-    </div>
-    {% endfor %}
-    <div class="row">
-        {% for image in images %}
-        <div class="col-md-3 ml-5 mr-4">
+        </div>
+        <div class="col-md-2">
+            <!--Empty Div-->
+        </div>
+        {% endfor %}
+        <hr>
+        <div class="mt-5 col-md-8">
+            {% for image in images %}
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{image.image.url}}" alt="{{image.image_caption}} photo" style="height: 18rem;">
                 <p style="font-size:12px;" class="ml-2 mt-2">
                     <span class="textsize">{{image.user.username}} </span>: {{image.image_caption}}</p>
                     <p class="text-muted ml-2" style="font-size:10px">{{image.date_uploaded|timesince}}AGO</p>
-            </div>
+                </div>
+                {% endfor%}
         </div>
-        {% endfor%}
     </div>
 </div>
 
-
-
-</div>
 {% endblock%}
