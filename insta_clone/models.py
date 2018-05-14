@@ -9,6 +9,9 @@ class Profile(models.Model):
         upload_to='profilepicture/', null=True, blank=True)
     bio = models.TextField()
 
+    def __str__(self):
+        return self.user.username
+        
     def save_profile(self):
         self.save()
 
@@ -40,8 +43,10 @@ class Like(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to='picfolder/', blank=True, null=True)
+    image_name = models.CharField(max_length = 100, blank=True)
     image_caption = models.CharField(max_length=100, null=True)
-    profile = models.ForeignKey(Profile, null=True)
+    profile = models.ForeignKey(
+        Profile, related_name="user_profile")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ForeignKey(Like, null=True, blank=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
@@ -50,8 +55,8 @@ class Image(models.Model):
         ordering = ['-date_uploaded']
 
     def __str__(self):
-        return self.profile
-
+        return self.image
+                
     def save_image(self):
         self.save()
 
@@ -78,3 +83,11 @@ class Comments(models.Model):
 
     def delete_comment(self):
             self.delete()
+
+
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        profile = Profile.objects.create(user=kwargs['instance'])
+
+
+post_save.connect(create_profile, sender=User)

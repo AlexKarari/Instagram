@@ -7,23 +7,34 @@ from .forms import NewCommentForm, NewImageForm, EditProfileForm, EditUserForm
 from django.contrib.auth.models import User
 
 # View Function to display the timeline
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def timeline(request):
     current_user = request.user
     posts = Image.get_images()
     return render(request, 'all/timeline.html', {"current_user": current_user, "posts": posts})
 
 # View Function to display a user's profile
-# @login_required(login_url='/accounts/login/')
-def user_profile(request, user_id):
+@login_required(login_url='/accounts/login/')
+def other_profile(request, user_id):
     try:
-        profile = Profile.objects.filter(id=user_id)
+        # current_user.id=request.user.id
+        profile = Profile.objects.all().filter(user=user_id)
+        print(profile)
         photos = Image.objects.filter(user_id=user_id)
     except Image.DoesNotExist:
         raise Http404()
     return render(request, 'all/userprofile.html', {"profile": profile, "photos": photos})
 
+#View function to view my profile
+@login_required(login_url='/accounts/login/')
+def my_profile(request):
+    current_user = request.user
+    profile = Profile.objects.filter(user = current_user)
+    image = Image.objects.filter(user = current_user)
+    return render(request, 'all/myprofile.html', {"profile": profile, "images": image})
+
 #View function to search for users in the app
+@login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'user' in request.GET and request.GET["user"]:
         search_term = request.GET.get("user")
@@ -37,7 +48,7 @@ def search_results(request):
         return render(request, 'all/search.html', {"message": message})
 
 #View function to comment on any image
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def comment(request, id):
     title = 'IG clone | Comments'
     post = get_object_or_404(Image, id=id)
@@ -57,7 +68,7 @@ def comment(request, id):
     return render(request, 'new_comment.html', {"title": title, "form": form})
 
 #View function to upload a new image
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def new_photo(request):
     current_user = request.user
     if request.method == 'POST':
@@ -72,7 +83,7 @@ def new_photo(request):
     return render(request, 'newimage.html', {"form": form})
 
 #View function to edit out one's profile
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 @transaction.atomic
 def editprofile(request):
     if request.method == 'POST':

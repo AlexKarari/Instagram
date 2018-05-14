@@ -16,7 +16,7 @@
                     <div class="card mr-5 mb-3" style="width: 25rem;">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item textsize">
-                                <a href="{% url 'user_profile' post.user.id %}" class="textsize">{{post.user.username}}</a>
+                                <a href="{% url 'other_profiles' post.user.id %}" class="textsize">{{post.user.username}}</a>
                             </li>
                         </ul>
                         {% if post.image%}
@@ -35,14 +35,14 @@
                                 <i class="fa fa-bookmark-o fa-1x float-right mt-1"></i>
                             </span>
                             <p class="mt-1" style="font-size:12px;">
-                                <a href="{% url 'user_profile' post.user.id%}" class="textsize">{{post.user.username}}</a> {{post.image_caption}}</p>
+                                <a href="{% url 'other_profiles' post.user.id%}" class="textsize">{{post.user.username}}</a> {{post.image_caption}}</p>
                             <p class="text-muted" style="font-size:10px">{{post.pub_date|timesince}}</p>
             
                             <div class="mb-2">
                                 {% for comment in post.comment.all %}
                                 <p style="font-size:11px;">
                                     <strong>
-                                        <a href="{% url 'user_profile' comment.user.id%}" class="textsize">{{comment.user}}</a>
+                                        <a href="{% url 'other_profiles' comment.user.id%}" class="textsize">{{comment.user}}</a>
                                     </strong> {{comment.comment}}</p>
                                 {% endfor %}
                                 <hr>

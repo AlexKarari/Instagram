@@ -6,7 +6,7 @@
     </a>
     <form class="form-inline" role="search" action="{% url 'search_results' %}">
         <div class="input-group">
-            <input class="form-control textsize" type="text" placeholder="search" name="profile" aria-label="Search">
+            <input class="form-control textsize" type="text" placeholder="search for user" name="profile" aria-label="Search">
         </div>
     </form>
     <div class="mr-5 pr-5" style="color:black;">
@@ -16,9 +16,20 @@
         <a href="{% url 'new_photo' %}" title="upload image">
             <i class="fas fa-upload mr-4"></i>
         </a>
-        <a href="{% url 'user_profile' user.id %}" title="My profile">
+            <a href="{% url 'myprofile' %}" title="My profile">
             <i class="fas fa-user mr-4"></i>
         </a>
     </div>
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{current_user.username}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/accounts/register">Register</a>
+                <a class="dropdown-item" href="/accounts/login">Login</a>
+                <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+        </li>
 
 </nav>
