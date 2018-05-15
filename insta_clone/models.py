@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email_confirmed = models.BooleanField(default=False)
     avatar = models.ImageField(
         upload_to='profilepicture/', null=True, blank=True)
     bio = models.TextField()
@@ -27,6 +28,7 @@ class Profile(models.Model):
     def search_profile(cls, search_term):
         profile = cls.objects.filter(user__username__icontains=search_term)
         return profile
+
 
 
 class Image(models.Model):

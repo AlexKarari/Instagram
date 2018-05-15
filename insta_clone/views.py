@@ -101,6 +101,7 @@ def editprofile(request):
     return render(request, 'profilechange.html', {"user_form": user_form, "profile_form": profile_form})
 
 
+@login_required(login_url='/accounts/login/')
 def like(request):
     '''
     The view starts by looking for a GET variable called id. If it finds one, it retrieves the
