@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^newphoto/', views.new_photo, name='new_photo'),
     url(r'^comment/(?P<id>\d+)', views.comment, name='comment'),
     url(r'^editprofile/', views.editprofile, name='editprofile'),
+    url(r'^vote/$', views.like, name='like'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

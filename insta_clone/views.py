@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Profile, Comments, Image
 from django.db import transaction
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from .forms import NewCommentForm, NewImageForm, EditProfileForm, EditUserForm
 from django.contrib.auth.models import User
@@ -98,3 +99,36 @@ def editprofile(request):
         user_form = EditUserForm(instance=request.user)
         profile_form = EditProfileForm(instance=request.user.profile)
     return render(request, 'profilechange.html', {"user_form": user_form, "profile_form": profile_form})
+
+
+def like(request):
+    '''
+    The view starts by looking for a GET variable called id. If it finds one, it retrieves the
+    Image object that is associated with this id.
+    Next, the view checks to see whether the user has voted for this bookmark before.
+    This is done by calling the filter method.
+    If this is the first time that the user has liked for this bookmark, we increment the
+    post.likes
+    '''
+    if request.GET['id']:
+        try:
+            id = request.GET['id']
+            post = Image.objects.get(id=id)
+            user_liked = post.users_liked.filter(
+                username=request.user.username)
+            if not user_liked:
+                post.likes += 1
+                post.users_liked.add(request.user)
+                post.save()
+
+            elif user_liked and post.likes != 0:
+                post.likes -= 1
+                post.users_liked.remove(request.user)
+                post.save()
+        except ObjectDoesNotExist:
+            raise Http404('Post not found.')
+
+    if request.META['HTTP_REFERER']:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'], {"user_liked": user_liked})
+
+    return HttpResponseRedirect('/')

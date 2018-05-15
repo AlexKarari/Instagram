@@ -29,18 +29,6 @@ class Profile(models.Model):
         return profile
 
 
-class Like(models.Model):
-    like = models.IntegerField(default=0)
-
-    def __int__(self):
-        return self.like
-
-    def save_like(self):
-        self.save()
-
-    def delete_like(self):
-        self.delete()
-
 class Image(models.Model):
     image = models.ImageField(upload_to='picfolder/', blank=True, null=True)
     image_name = models.CharField(max_length = 100, blank=True)
@@ -48,7 +36,8 @@ class Image(models.Model):
     profile = models.ForeignKey(
         Profile, related_name="user_profile")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    likes = models.ForeignKey(Like, null=True, blank=True)
+    likes = models.PositiveIntegerField(default=0)
+    users_liked = models.ManyToManyField(User, related_name="user_liked")
     date_uploaded = models.DateTimeField(auto_now_add=True)
 
     class Meta:
