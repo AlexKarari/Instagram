@@ -1,10 +1,10 @@
 {%extends 'all/base.html'%} 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
 
     <div class="row">
-        {% if profile %}
-        <h2>Found {{ profile|length }} of searched term {{message}}</h2>
+        {% if profiles %}
+        <h2>Found {{ profiles|length }} of searched term {{message}}</h2>
         {% else %}
         <h2> No such user profile exists for the search term {{message}}.</h2>
         <h2>A different name perhaps?</h2>
@@ -14,8 +14,8 @@
 
     <div class="row">
 
-        {% if profile %} 
-        {% for prof in profile %}
+        {% if profiles %} 
+        {% for prof in profiles %}
         <div class="col-sm-6 col-md-3">
             <h1>{{prof.user}}</h1>
         </div>

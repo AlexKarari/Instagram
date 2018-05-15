@@ -1,12 +1,12 @@
 {% load static %}
-<nav class="navbar navbar-light fixed-top justify-content-between mynav">
+<nav class="navbar navbar-light fixed-top justify-content-between mynav mt-7">
     <a class="navbar-brand" href="{% url 'various' %}">
         <i class="fab fa-instagram"></i>
         IG Clone
     </a>
     <form class="form-inline" role="search" action="{% url 'search_results' %}">
         <div class="input-group">
-            <input class="form-control textsize" type="text" placeholder="search for user" name="profile" aria-label="Search">
+            <input class="form-control textsize" type="text" placeholder="search for user" name="user" aria-label="Search">
         </div>
     </form>
     <div class="mr-5 pr-5" style="color:black;">
