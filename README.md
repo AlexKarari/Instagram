@@ -31,6 +31,15 @@ If you don't have it installed got to [Python.org](https://www.python.org/downlo
 Run ``python3.6 manage.py runserver`` and view live on ``Localhost:8000`` in your local browser.
 
 ## Link
+https://xandersgram.herokuapp.com/
+
+##Known Bugs
+* Comments not displaying but are saving in the db.
+
+##Yet to be done
+* Follow option yet to be implemented.
+* Have my image in a modal, and all comments display under it, but in the smae modal.
+* Complete the styling.
 
 ## License
 
